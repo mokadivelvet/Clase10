@@ -1,39 +1,54 @@
-    const nuevoh1 = document.createElement("h1");
-    const nuevoInput = document.createElement("input");
-    const nuevoBoton = document.createElement("button");
-    const botonReset = document.createElement("button");
+const nuevoh1 = document.createElement("h1");
+const nuevoInput = document.createElement("input");
+const botonReset = document.createElement("button");
 
-    const color = document.getElementById("colores");
-    const tamaño = document.getElementById("tamañoFuente");
+const color = document.getElementById("colores");
+const tamaño = document.getElementById("tamañoFuente");
 
-function inicio() {
-    nuevoh1.style.fontSize = "28px";
-    nuevoh1.style.color = "black"
+function crearElementos() {
     nuevoh1.textContent = "Bienvenido!";
-      
-    console.log("si funca inicio")
+    nuevoh1.dataset.color = "black";
+    nuevoh1.dataset.size = "28px";
 
+    nuevoInput.placeholder = "Ingrese un texto";
     botonReset.textContent = "Resetear texto";
 
     document.body.appendChild(nuevoInput);
-    document.body.appendChild(nuevoBoton);
     document.body.appendChild(nuevoh1);
     document.body.appendChild(botonReset);
-};
-
-function funcionNuevoBoton() {
-    nuevoInput.placeholder = "Ingrese un texto";
-    nuevoBoton.textContent = "Clickeame";
 }
 
-function funcionBotonReset(){
-    botonReset.addEventListener("click", ()=> {
-    nuevoh1.style.fontSize = "28px";
-    nuevoh1.style.color = "black"
-    nuevoh1.textContent = "Bienvenido!";
-    })
+function aplicarEstilosDesdeDataset() {
+    nuevoh1.style.color = nuevoh1.dataset.color;
+    nuevoh1.style.fontSize = nuevoh1.dataset.size;
 }
 
+function configurarEventos() {
+    nuevoInput.addEventListener("input", () => {
+        nuevoh1.textContent = nuevoInput.value;
+    });
 
+    color.addEventListener("change", () => {
+        nuevoh1.dataset.color = color.value;
+        aplicarEstilosDesdeDataset();
+    });
 
+    tamaño.addEventListener("change", () => {
+        nuevoh1.dataset.size = tamaño.value;
+        aplicarEstilosDesdeDataset();
+    });
 
+    botonReset.addEventListener("click", () => {
+        nuevoInput.value = "";
+        nuevoh1.textContent = "Bienvenido!";
+        nuevoh1.dataset.color = "black";
+        nuevoh1.dataset.size = "28px";
+        aplicarEstilosDesdeDataset();
+    });
+}
+
+export function main() {
+    crearElementos();
+    aplicarEstilosDesdeDataset();
+    configurarEventos();
+}
